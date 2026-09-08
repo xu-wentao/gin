@@ -1,0 +1,23 @@
+FORK_NOTES.md
+  s_fa1eb7184c16a1::t_1df2ed55b94262 9,14-15
+go.mod
+  s_fa1eb7184c16a1::t_6f47b73d6b7132 25,28,32
+go.sum
+  s_fa1eb7184c16a1::t_ecb773c6184b74 22,25-26,35,38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "261f9d95318d0a90c85a61499fc1db0e4405eb85",
+  "prompts": {},
+  "sessions": {
+    "s_fa1eb7184c16a1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a07edf-0fb7-7080-89e1-76f23bae2fff",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "xuwentao <cutenear1993@yahoo.com>"
+    }
+  }
+}
