@@ -40,7 +40,6 @@ const (
 	MIMEYAML2             = binding.MIMEYAML2
 	MIMETOML              = binding.MIMETOML
 	MIMEPROTOBUF          = binding.MIMEPROTOBUF
-	MIMEBSON              = binding.MIMEBSON
 )
 
 // BodyBytesKey indicates a default body bytes key.
@@ -835,9 +834,8 @@ func (c *Context) MustBindWith(obj any, b binding.Binding) error {
 	if err != nil {
 		var maxBytesErr *http.MaxBytesError
 
-		// Note: When using sonic or go-json as JSON encoder, they do not propagate the http.MaxBytesError error
+		// Note: When using go-json as JSON encoder, it does not propagate the http.MaxBytesError error
 		// https://github.com/goccy/go-json/issues/485
-		// https://github.com/bytedance/sonic/issues/800
 		switch {
 		case errors.As(err, &maxBytesErr):
 			c.AbortWithError(http.StatusRequestEntityTooLarge, err).SetType(ErrorTypeBind) //nolint: errcheck
@@ -1295,11 +1293,6 @@ func (c *Context) ProtoBuf(code int, obj any) {
 	c.Render(code, render.ProtoBuf{Data: obj})
 }
 
-// BSON serializes the given struct as BSON into the response body.
-func (c *Context) BSON(code int, obj any) {
-	c.Render(code, render.BSON{Data: obj})
-}
-
 // String writes the given string into the response body.
 func (c *Context) String(code int, format string, values ...any) {
 	c.Render(code, render.String{Format: format, Data: values})
@@ -1407,7 +1400,6 @@ type Negotiate struct {
 	Data         any
 	TOMLData     any
 	PROTOBUFData any
-	BSONData     any
 }
 
 // Negotiate calls different Render according to acceptable Accept format.
@@ -1436,10 +1428,6 @@ func (c *Context) Negotiate(code int, config Negotiate) {
 	case binding.MIMEPROTOBUF:
 		data := chooseData(config.PROTOBUFData, config.Data)
 		c.ProtoBuf(code, data)
-
-	case binding.MIMEBSON:
-		data := chooseData(config.BSONData, config.Data)
-		c.BSON(code, data)
 
 	default:
 		c.AbortWithError(http.StatusNotAcceptable, errors.New("the accepted formats are not offered by the server")) //nolint: errcheck

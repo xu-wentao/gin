@@ -19,7 +19,6 @@ import (
 	testdata "github.com/gin-gonic/gin/testdata/protoexample"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"go.mongodb.org/mongo-driver/v2/bson"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -390,55 +389,6 @@ func TestRenderProtoBufFail(t *testing.T) {
 	data := &testdata.Test{}
 	err := (ProtoBuf{data}).Render(w)
 	require.Error(t, err)
-}
-
-func TestRenderBSON(t *testing.T) {
-	w := httptest.NewRecorder()
-	reps := []int64{int64(1), int64(2)}
-	type mystruct struct {
-		Label string
-		Reps  []int64
-	}
-
-	data := &mystruct{
-		Label: "test",
-		Reps:  reps,
-	}
-
-	(BSON{data}).WriteContentType(w)
-	bsonData, err := bson.Marshal(data)
-	require.NoError(t, err)
-	assert.Equal(t, "application/bson", w.Header().Get("Content-Type"))
-
-	err = (BSON{data}).Render(w)
-
-	require.NoError(t, err)
-	assert.Equal(t, bsonData, w.Body.Bytes())
-	assert.Equal(t, "application/bson", w.Header().Get("Content-Type"))
-}
-
-func TestRenderBSONError(t *testing.T) {
-	w := httptest.NewRecorder()
-	data := make(chan int)
-
-	err := (BSON{data}).Render(w)
-	require.Error(t, err)
-}
-
-func TestRenderBSONWriteError(t *testing.T) {
-	type testStruct struct {
-		Value string
-	}
-	data := &testStruct{Value: "test"}
-
-	ew := &errorWriter{
-		ErrThreshold:     1,
-		ResponseRecorder: httptest.NewRecorder(),
-	}
-
-	err := (BSON{data}).Render(ew)
-	require.Error(t, err)
-	assert.Equal(t, "write error", err.Error())
 }
 
 func TestRenderXML(t *testing.T) {

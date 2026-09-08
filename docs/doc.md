@@ -80,24 +80,12 @@ You can find a number of ready-to-run examples at [Gin examples repository](http
 
 ### Build with json replacement
 
-Gin uses `encoding/json` as the default JSON package but you can change it by building from other tags.
-
-[jsoniter](https://github.com/json-iterator/go)
-
-```sh
-go build -tags=jsoniter .
-```
+Gin uses `encoding/json` as the default JSON package. The `go_json` build tag selects go-json instead.
 
 [go-json](https://github.com/goccy/go-json)
 
 ```sh
 go build -tags=go_json .
-```
-
-[sonic](https://github.com/bytedance/sonic)
-
-```sh
-go build -tags=sonic .
 ```
 
 ### Build without `MsgPack` rendering feature
@@ -2135,37 +2123,31 @@ import (
 
   "github.com/gin-gonic/gin"
   "github.com/gin-gonic/gin/codec/json"
-  jsoniter "github.com/json-iterator/go"
+  gojson "github.com/goccy/go-json"
 )
-
-var customConfig = jsoniter.Config{
-  EscapeHTML:             true,
-  SortMapKeys:            true,
-  ValidateJsonRawMessage: true,
-}.Froze()
 
 // implement api.JsonApi
 type customJsonApi struct {
 }
 
 func (j customJsonApi) Marshal(v any) ([]byte, error) {
-  return customConfig.Marshal(v)
+  return gojson.Marshal(v)
 }
 
 func (j customJsonApi) Unmarshal(data []byte, v any) error {
-  return customConfig.Unmarshal(data, v)
+  return gojson.Unmarshal(data, v)
 }
 
 func (j customJsonApi) MarshalIndent(v any, prefix, indent string) ([]byte, error) {
-  return customConfig.MarshalIndent(v, prefix, indent)
+  return gojson.MarshalIndent(v, prefix, indent)
 }
 
 func (j customJsonApi) NewEncoder(writer io.Writer) json.Encoder {
-  return customConfig.NewEncoder(writer)
+  return gojson.NewEncoder(writer)
 }
 
 func (j customJsonApi) NewDecoder(reader io.Reader) json.Decoder {
-  return customConfig.NewDecoder(reader)
+  return gojson.NewDecoder(reader)
 }
 
 func main() {
