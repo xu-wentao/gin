@@ -1,0 +1,29 @@
+docs/doc.md
+  s_fa1eb7184c16a1::t_bf1950fffa29e1 83
+  s_fa1eb7184c16a1::t_ca21d798d8a177 2126,2134,2138,2142,2146,2150
+codec/json/json.go
+  s_fa1eb7184c16a1::t_dbea5ee498796a 5
+context.go
+  s_fa1eb7184c16a1::t_bf1950fffa29e1 837
+binding/json_test.go
+  s_fa1eb7184c16a1::t_168ca8ebeb2ad1 48,53,57-58,73-74,78-79
+  s_fa1eb7184c16a1::t_f2e4f06a3e2378 8,13,37-41,43-44,46-47,50-52,56,61-62,65-66,69-70,75,80
+FORK_NOTES.md
+  s_fa1eb7184c16a1::t_35bd980cebfe8b 1-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "398e2bc1b27552deaebe884dc9e170a1f0f34c82",
+  "prompts": {},
+  "sessions": {
+    "s_fa1eb7184c16a1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a07edf-0fb7-7080-89e1-76f23bae2fff",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "xuwentao <cutenear1993@yahoo.com>"
+    }
+  }
+}
